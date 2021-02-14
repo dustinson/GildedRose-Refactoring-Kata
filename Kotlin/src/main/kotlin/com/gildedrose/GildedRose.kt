@@ -14,23 +14,7 @@ class GildedRose(var items: Array<Item>) {
 
         items.forEach { item ->
             if (item.name == agedBrie) {
-                if (item.quality < maxQuality) {
-                    item.quality = item.quality + 1
-
-                    if (item.name == backstagePasses) {
-                        if (item.sellIn < upcomingDays) {
-                            if (item.quality < maxQuality) {
-                                item.quality = item.quality + 1
-                            }
-                        }
-
-                        if (item.sellIn < thisWeek) {
-                            if (item.quality < maxQuality) {
-                                item.quality = item.quality + 1
-                            }
-                        }
-                    }
-                }
+                updateAgedBrieQuality(item, maxQuality, backstagePasses, upcomingDays, thisWeek)
             } else {
                 if (item.name == backstagePasses) {
                     if (item.quality < maxQuality) {
@@ -80,6 +64,32 @@ class GildedRose(var items: Array<Item>) {
                                 item.quality = item.quality - 1
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateAgedBrieQuality(
+        item: Item,
+        maxQuality: Int,
+        backstagePasses: String,
+        upcomingDays: Int,
+        thisWeek: Int
+    ) {
+        if (item.quality < maxQuality) {
+            item.quality = item.quality + 1
+
+            if (item.name == backstagePasses) {
+                if (item.sellIn < upcomingDays) {
+                    if (item.quality < maxQuality) {
+                        item.quality = item.quality + 1
+                    }
+                }
+
+                if (item.sellIn < thisWeek) {
+                    if (item.quality < maxQuality) {
+                        item.quality = item.quality + 1
                     }
                 }
             }
