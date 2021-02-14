@@ -19,13 +19,15 @@ class GildedRose(var items: Array<Item>) {
                     item.quality = item.quality + 1
 
                     if (item.name == backstagePasses) {
-                        if (item.sellIn < 11) {
+                        val upcomingDays = 11
+                        if (item.sellIn < upcomingDays) {
                             if (item.quality < maxQuality) {
                                 item.quality = item.quality + 1
                             }
                         }
 
-                        if (item.sellIn < 6) {
+                        val thisWeek = 6
+                        if (item.sellIn < thisWeek) {
                             if (item.quality < maxQuality) {
                                 item.quality = item.quality + 1
                             }
