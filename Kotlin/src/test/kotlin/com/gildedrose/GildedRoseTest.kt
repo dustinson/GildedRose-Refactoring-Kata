@@ -7,7 +7,7 @@ internal class GildedRoseTest {
     /*
         - All items have a SellIn value which denotes the number of days we have to sell the item
         - All items have a Quality value which denotes how valuable the item is
-        - At the end of each day our system lowers both values for every item
+        x- At the end of each day our system lowers both values for every item
 
         Pretty simple, right? Well this is where it gets interesting:
 
@@ -25,19 +25,19 @@ internal class GildedRoseTest {
         - "Conjured" items degrade in Quality twice as fast as normal items*/
     @Test
     fun sellInDecreases() {
-        val items = arrayOf<Item>(Item("foo", 3, 0))
-        val app = GildedRose(items)
+        val app = GildedRose(getRegularItem())
         assertSellInChangesBy(app, -1)
-
     }
 
     @Test
     internal fun qualityDecreases() {
-        val startingQuality = 5
-        val items = arrayOf(Item("foo",sellIn = 3, quality = startingQuality))
-        val app = GildedRose(items)
-
+        val app = GildedRose(getRegularItem())
         assertQualityChangesBy(app, -1)
+    }
+
+    private fun getRegularItem(): Array<Item> {
+        val startingQuality = 5
+        return arrayOf(Item("foo", sellIn = 3, quality = startingQuality))
     }
 
     private fun assertQualityChangesBy(app: GildedRose, qualityDifference: Int) {
