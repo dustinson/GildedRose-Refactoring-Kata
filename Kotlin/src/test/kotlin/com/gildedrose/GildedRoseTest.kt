@@ -40,9 +40,13 @@ internal class GildedRoseTest {
         val item = getRegularItem()
         item.quality = 0
         assertQualityChangesBy(item, 0)
+    }
 
+    @Test
+    internal fun qualityWillNotDecreaseBelowZero() {
         //interesting.  If a negative number is in the system, it will simply not decrement.
         //Since the quality is ONLY controlled by this system, we should never be in this state
+        val item = getRegularItem()
         item.quality = -42
         assertQualityChangesBy(item, 0)
     }
