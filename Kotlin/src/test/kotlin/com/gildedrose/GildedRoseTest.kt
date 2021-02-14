@@ -1,6 +1,7 @@
 package com.gildedrose
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class GildedRoseTest {
@@ -23,32 +24,36 @@ internal class GildedRoseTest {
         We have recently signed a supplier of conjured items. This requires an update to our system:
 
         - "Conjured" items degrade in Quality twice as fast as normal items*/
+
+    private lateinit var regularItem: Item
+
+    @BeforeEach
+    internal fun setUp() {
+        this.regularItem = getRegularItem()
+    }
+
     @Test
     fun sellInDecreases() {
-        val item = getRegularItem()
-        assertSellInChangesBy(item, -1)
+        assertSellInChangesBy(regularItem, -1)
     }
 
     @Test
     internal fun qualityDecreases() {
-        val item = getRegularItem()
-        assertQualityChangesBy(item, -1)
+        assertQualityChangesBy(regularItem, -1)
     }
 
     @Test
     internal fun qualityIsNeverNegative() {
-        val item = getRegularItem()
-        item.quality = 0
-        assertQualityChangesBy(item, 0)
+        regularItem.quality = 0
+        assertQualityChangesBy(regularItem, 0)
     }
 
     @Test
     internal fun qualityWillNotDecreaseBelowZero() {
         //interesting.  If a negative number is in the system, it will simply not decrement.
         //Since the quality is ONLY controlled by this system, we should never be in this state
-        val item = getRegularItem()
-        item.quality = -42
-        assertQualityChangesBy(item, 0)
+        regularItem.quality = -42
+        assertQualityChangesBy(regularItem, 0)
     }
 
     //regular item with random values that don't mean anything
