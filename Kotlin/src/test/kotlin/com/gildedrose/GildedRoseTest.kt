@@ -24,12 +24,11 @@ internal class GildedRoseTest {
 
     - "Conjured" items degrade in Quality twice as fast as normal items*/
     @Test
-    fun foo() {
-        val items = arrayOf<Item>(Item("foo", 0, 0))
+    fun sellInDecreases() {
+        val items = arrayOf<Item>(Item("foo", 3, 0))
         val app = GildedRose(items)
         app.updateQuality()
-        assertEquals("foo", app.items[0].name)
-
+        assertEquals(2, app.items[0].sellIn)
     }
 
 }
