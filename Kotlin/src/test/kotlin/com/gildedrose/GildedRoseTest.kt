@@ -32,7 +32,7 @@ internal class GildedRoseTest {
 
     @BeforeEach
     internal fun setUp() {
-        this.regularItem = getRegularItem()
+        this.regularItem = Item("foo", sellIn = 3, quality = 5)
         this.agedBrieItem = Item(name = "Aged Brie", sellIn = 5, quality = 12)
         this.sulfurasItem = Item(name = "Sulfuras, Hand of Ragnaros", sellIn = 23, quality = 25)
         this.backStagePassItem = Item(name = "Backstage passes to a TAFKAL80ETC concert", 30, 35)
@@ -59,7 +59,6 @@ internal class GildedRoseTest {
         regularItem.quality = 0
         assertQualityChangesBy(regularItem, 0)
     }
-
 
     @Test
     internal fun qualityWillNotDecreaseBelowZero() {
@@ -103,7 +102,7 @@ internal class GildedRoseTest {
 
     @Test
     internal fun backstagePassesRangeTestForEarlyBird() {
-        for (sellInDays in 11..42) {
+        for (sellInDays in 11..24) {
             backStagePassItem.sellIn = sellInDays
             assertQualityChangesBy(backStagePassItem, 1)
         }
@@ -144,18 +143,17 @@ internal class GildedRoseTest {
         assertQualityChangesBy(backStagePassItem, -42)
     }
 
-    //regular item with random values that don't mean anything
-    private fun getRegularItem() = Item("foo", sellIn = 3, quality = 5)
-
     private fun assertQualityChangesBy(item: Item, qualityDifference: Int) {
         val originalQuality = item.quality
         val originalSellIn = item.sellIn
+        val errMsg =
+            "Quality was expected to change by '${qualityDifference}' when sellIn is '${originalSellIn}' days.  We started with quality of '${originalQuality}'"
         val expected = originalQuality + qualityDifference
 
         val app = GildedRose(arrayOf(item))
         app.updateQuality()
 
-        assertEquals(expected, item.quality, "Quality was expected to change by '${qualityDifference}' when sellIn is '${originalSellIn}' days.  We started with quality of '${originalQuality}'")
+        assertEquals(expected, item.quality, errMsg)
     }
 
     private fun assertSellInChangesBy(item: Item, sellInDifference: Int) {
