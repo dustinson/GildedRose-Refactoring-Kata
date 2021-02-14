@@ -6,8 +6,7 @@ class GildedRose(var items: Array<Item>) {
         val agedBrie = "Aged Brie"
         val backstagePasses = "Backstage passes to a TAFKAL80ETC concert"
         val sulfuras = "Sulfuras, Hand of Ragnaros"
-        for (i in items.indices) {
-            val item = items[i]
+        items.forEach { item ->
             if (item.name != agedBrie && item.name != backstagePasses) {
                 if (item.quality > 0) {
                     if (item.name != sulfuras) {
