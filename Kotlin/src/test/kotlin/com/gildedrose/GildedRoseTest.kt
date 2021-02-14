@@ -33,10 +33,15 @@ internal class GildedRoseTest {
 
     @Test
     internal fun qualityDecreases() {
-        val items = arrayOf(Item("foo",sellIn = 3, quality =5))
+        val startingQuality = 5
+        val expected = startingQuality-1
+        val items = arrayOf(Item("foo",sellIn = 3, quality = startingQuality))
         val app = GildedRose(items)
+
         app.updateQuality()
-        assertEquals(4, app.items[0].quality)
+
+        val item = app.items[0]
+        assertEquals(expected, item.quality)
     }
 
     private fun assertSellInChangesBy(app: GildedRose, sellInDifference: Int) {
