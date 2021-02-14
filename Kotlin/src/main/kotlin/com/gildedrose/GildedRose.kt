@@ -75,7 +75,8 @@ class GildedRose(var items: Array<Item>) {
                         item.quality = item.quality - item.quality
                     } else {
                         if (item.quality > minimumQuality) {
-                            if (item.name != sulfuras) {
+                            if (item.name == sulfuras) {
+                            } else {
                                 item.quality = item.quality - 1
                             }
                         }
