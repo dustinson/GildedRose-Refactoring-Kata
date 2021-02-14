@@ -13,10 +13,30 @@ class GildedRose(var items: Array<Item>) {
         val thisWeek = 6
 
         items.forEach { item ->
-            if (item.name != agedBrie && item.name != backstagePasses) {
-                if (item.quality > minimumQuality) {
-                    if (item.name != sulfuras) {
-                        item.quality = item.quality - 1
+            if (item.name != agedBrie) {
+                if (item.name != backstagePasses) {
+                    if (item.quality > minimumQuality) {
+                        if (item.name != sulfuras) {
+                            item.quality = item.quality - 1
+                        }
+                    }
+                } else {
+                    if (item.quality < maxQuality) {
+                        item.quality = item.quality + 1
+
+                        if (item.name == backstagePasses) {
+                            if (item.sellIn < upcomingDays) {
+                                if (item.quality < maxQuality) {
+                                    item.quality = item.quality + 1
+                                }
+                            }
+
+                            if (item.sellIn < thisWeek) {
+                                if (item.quality < maxQuality) {
+                                    item.quality = item.quality + 1
+                                }
+                            }
+                        }
                     }
                 }
             } else {
