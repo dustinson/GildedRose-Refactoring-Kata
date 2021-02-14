@@ -35,6 +35,13 @@ internal class GildedRoseTest {
         assertQualityChangesBy(item, -1)
     }
 
+    @Test
+    internal fun qualityIsNeverNegative() {
+        val item = getRegularItem()
+        item.quality = 0
+        assertQualityChangesBy(item, 0)
+    }
+
     //regular item with random values that don't mean anything
     private fun getRegularItem() = Item("foo", sellIn = 3, quality = 5)
 
