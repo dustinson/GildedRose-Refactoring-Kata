@@ -25,6 +25,7 @@ internal class GildedRoseTest {
 
         - "Conjured" items degrade in Quality twice as fast as normal items*/
 
+    private lateinit var sulfurasItem: Item
     private lateinit var regularItem: Item
     private lateinit var agedBrieItem: Item
 
@@ -32,6 +33,7 @@ internal class GildedRoseTest {
     internal fun setUp() {
         this.regularItem = getRegularItem()
         this.agedBrieItem = Item(name = "Aged Brie", sellIn = 5, quality = 12)
+        this .sulfurasItem = Item(name="Sulfuras, Hand of Ragnaros", sellIn = 23, quality = 25)
     }
 
     @Test
@@ -68,6 +70,11 @@ internal class GildedRoseTest {
     internal fun agedBrieQualityMax() {
         agedBrieItem.quality = 50
         assertQualityChangesBy(agedBrieItem, 0)
+    }
+
+    @Test
+    internal fun sulfurasQualityNeverChanges() {
+        assertQualityChangesBy(sulfurasItem, 0)
     }
 
     //regular item with random values that don't mean anything
