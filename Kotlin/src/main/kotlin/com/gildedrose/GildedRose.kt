@@ -59,7 +59,8 @@ class GildedRose(var items: Array<Item>) {
                 }
             }
 
-            if (item.name != sulfuras) {
+            if (item.name == sulfuras) {
+            } else {
                 item.sellIn = item.sellIn - 1
             }
 
