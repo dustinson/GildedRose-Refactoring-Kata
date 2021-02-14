@@ -25,33 +25,34 @@ internal class GildedRoseTest {
         - "Conjured" items degrade in Quality twice as fast as normal items*/
     @Test
     fun sellInDecreases() {
-        val app = GildedRose(getRegularItem())
-        assertSellInChangesBy(app, -1)
+        val item = getRegularItem()
+        assertSellInChangesBy(item, -1)
     }
 
     @Test
     internal fun qualityDecreases() {
-        val app = GildedRose(getRegularItem())
-        assertQualityChangesBy(app, -1)
+        val item = getRegularItem()
+        assertQualityChangesBy(item, -1)
     }
 
-    private fun getRegularItem(): Array<Item> {
-        val startingQuality = 5
-        return arrayOf(Item("foo", sellIn = 3, quality = startingQuality))
-    }
+    //regular item with random values that don't mean anything
+    private fun getRegularItem() = Item("foo", sellIn = 3, quality = 5)
 
-    private fun assertQualityChangesBy(app: GildedRose, qualityDifference: Int) {
-        val item = app.items[0]
+    private fun assertQualityChangesBy(item: Item, qualityDifference: Int) {
         val expected = item.quality + qualityDifference
+
+        val app = GildedRose(arrayOf(item))
         app.updateQuality()
 
         assertEquals(expected, item.quality)
     }
 
-    private fun assertSellInChangesBy(app: GildedRose, sellInDifference: Int) {
-        val item = app.items[0]
+    private fun assertSellInChangesBy(item: Item, sellInDifference: Int) {
         val expected = item.sellIn + sellInDifference
+
+        val app = GildedRose(arrayOf(item))
         app.updateQuality()
+
         assertEquals(expected, item.sellIn)
     }
 
