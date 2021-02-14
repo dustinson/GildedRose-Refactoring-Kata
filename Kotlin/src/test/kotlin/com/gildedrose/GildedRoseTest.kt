@@ -105,7 +105,7 @@ internal class GildedRoseTest {
     internal fun backstagePassesRangeTestForEarlyBird() {
         for (sellInDays in 11..42) {
             backStagePassItem.sellIn = sellInDays
-            assertQualityChangesBy(backStagePassItem, 2)
+            assertQualityChangesBy(backStagePassItem, 1)
         }
     }
 
@@ -119,7 +119,7 @@ internal class GildedRoseTest {
     internal fun backstagePassesRangeTestForUpComing() {
         for (sellInDays in 6..10) {
             backStagePassItem.sellIn = sellInDays
-            assertQualityChangesBy(backStagePassItem, 3)
+            assertQualityChangesBy(backStagePassItem, 2)
         }
     }
 
@@ -149,12 +149,13 @@ internal class GildedRoseTest {
 
     private fun assertQualityChangesBy(item: Item, qualityDifference: Int) {
         val originalQuality = item.quality
+        val originalSellIn = item.sellIn
         val expected = originalQuality + qualityDifference
 
         val app = GildedRose(arrayOf(item))
         app.updateQuality()
 
-        assertEquals(expected, item.quality, "Quality was expected to change by '${qualityDifference}' when sellIn is '${item.sellIn}' days.  We started with quality of '${originalQuality}'")
+        assertEquals(expected, item.quality, "Quality was expected to change by '${qualityDifference}' when sellIn is '${originalSellIn}' days.  We started with quality of '${originalQuality}'")
     }
 
     private fun assertSellInChangesBy(item: Item, sellInDifference: Int) {
