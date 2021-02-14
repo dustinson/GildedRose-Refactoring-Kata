@@ -6,6 +6,7 @@ class GildedRose(var items: Array<Item>) {
         val agedBrie = "Aged Brie"
         val backstagePasses = "Backstage passes to a TAFKAL80ETC concert"
         val sulfuras = "Sulfuras, Hand of Ragnaros"
+        val maxQuality = 50
         items.forEach { item ->
             if (item.name != agedBrie && item.name != backstagePasses) {
                 if (item.quality > 0) {
@@ -14,18 +15,18 @@ class GildedRose(var items: Array<Item>) {
                     }
                 }
             } else {
-                if (item.quality < 50) {
+                if (item.quality < maxQuality) {
                     item.quality = item.quality + 1
 
                     if (item.name == backstagePasses) {
                         if (item.sellIn < 11) {
-                            if (item.quality < 50) {
+                            if (item.quality < maxQuality) {
                                 item.quality = item.quality + 1
                             }
                         }
 
                         if (item.sellIn < 6) {
-                            if (item.quality < 50) {
+                            if (item.quality < maxQuality) {
                                 item.quality = item.quality + 1
                             }
                         }
@@ -49,7 +50,7 @@ class GildedRose(var items: Array<Item>) {
                         item.quality = item.quality - item.quality
                     }
                 } else {
-                    if (item.quality < 50) {
+                    if (item.quality < maxQuality) {
                         item.quality = item.quality + 1
                     }
                 }
