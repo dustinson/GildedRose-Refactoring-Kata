@@ -25,6 +25,7 @@ internal class GildedRoseTest {
 
         - "Conjured" items degrade in Quality twice as fast as normal items*/
 
+    private lateinit var backStagePassItem: Item
     private lateinit var sulfurasItem: Item
     private lateinit var regularItem: Item
     private lateinit var agedBrieItem: Item
@@ -34,6 +35,7 @@ internal class GildedRoseTest {
         this.regularItem = getRegularItem()
         this.agedBrieItem = Item(name = "Aged Brie", sellIn = 5, quality = 12)
         this .sulfurasItem = Item(name="Sulfuras, Hand of Ragnaros", sellIn = 23, quality = 25)
+        this.backStagePassItem = Item(name="Backstage passes to a TAFKAL80ETC concert", 30,35)
     }
 
     @Test
@@ -80,6 +82,23 @@ internal class GildedRoseTest {
     @Test
     internal fun sulfurasSellInNeverChanges() {
         assertSellInChangesBy(sulfurasItem,0)
+    }
+
+    @Test
+    internal fun backstagePassQualityIncreasesNormallyDuringEarlyBirdSales() {
+        assertQualityChangesBy(backStagePassItem, 1)
+    }
+
+    @Test
+    internal fun backstagePassQualityIncreasesDoubleWhenUpComing() {
+        backStagePassItem.sellIn=10
+        assertQualityChangesBy(backStagePassItem,2)
+    }
+
+    @Test
+    internal fun backstagePassQualityIncreasesDoubleWhenConcertWeek() {
+        backStagePassItem.sellIn = 5
+        assertQualityChangesBy(backStagePassItem,3)
     }
 
     //regular item with random values that don't mean anything
