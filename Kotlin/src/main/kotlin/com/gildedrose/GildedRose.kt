@@ -32,13 +32,7 @@ class GildedRose(var items: Array<Item>) {
                     }
                 }
             } else {
-                if (item.name != backstagePasses) {
-                    if (item.quality > minimumQuality) {
-                        if (item.name != sulfuras) {
-                            item.quality = item.quality - 1
-                        }
-                    }
-                } else {
+                if (item.name == backstagePasses) {
                     if (item.quality < maxQuality) {
                         item.quality = item.quality + 1
 
@@ -54,6 +48,12 @@ class GildedRose(var items: Array<Item>) {
                                     item.quality = item.quality + 1
                                 }
                             }
+                        }
+                    }
+                } else {
+                    if (item.quality > minimumQuality) {
+                        if (item.name != sulfuras) {
+                            item.quality = item.quality - 1
                         }
                     }
                 }
