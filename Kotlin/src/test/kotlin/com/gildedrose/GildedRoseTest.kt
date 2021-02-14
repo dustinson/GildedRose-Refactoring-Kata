@@ -49,6 +49,12 @@ internal class GildedRoseTest {
     }
 
     @Test
+    internal fun qualityDecreasesTwiceAsFastWhenExpired() {
+        regularItem.sellIn = 0
+        assertQualityChangesBy(regularItem, -2)
+    }
+
+    @Test
     internal fun qualityIsNeverNegative() {
         regularItem.quality = 0
         assertQualityChangesBy(regularItem, 0)
@@ -99,6 +105,13 @@ internal class GildedRoseTest {
     internal fun backstagePassQualityIncreasesDoubleWhenConcertWeek() {
         backStagePassItem.sellIn = 5
         assertQualityChangesBy(backStagePassItem,3)
+    }
+
+    @Test
+    internal fun backstagePassHasNoQualityAfterEvent() {
+        backStagePassItem.sellIn = 0
+        backStagePassItem.quality = 42
+        assertQualityChangesBy(backStagePassItem,-42)
     }
 
     //regular item with random values that don't mean anything
