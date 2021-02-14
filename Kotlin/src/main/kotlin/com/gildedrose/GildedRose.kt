@@ -44,7 +44,11 @@ class GildedRose(var items: Array<Item>) {
             }
 
             if (item.sellIn < minimumSellInDays) {
-                if (item.name != agedBrie) {
+                if (item.name == agedBrie) {
+                    if (item.quality < maxQuality) {
+                        item.quality = item.quality + 1
+                    }
+                } else {
                     if (item.name != backstagePasses) {
                         if (item.quality > minimumQuality) {
                             if (item.name != sulfuras) {
@@ -53,10 +57,6 @@ class GildedRose(var items: Array<Item>) {
                         }
                     } else {
                         item.quality = item.quality - item.quality
-                    }
-                } else {
-                    if (item.quality < maxQuality) {
-                        item.quality = item.quality + 1
                     }
                 }
             }
