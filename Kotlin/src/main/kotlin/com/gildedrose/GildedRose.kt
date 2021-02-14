@@ -52,7 +52,8 @@ class GildedRose(var items: Array<Item>) {
                     }
                 } else {
                     if (item.quality > minimumQuality) {
-                        if (item.name != sulfuras) {
+                        if (item.name == sulfuras) {
+                        } else {
                             item.quality = item.quality - 1
                         }
                     }
