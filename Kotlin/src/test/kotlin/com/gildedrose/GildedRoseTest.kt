@@ -34,8 +34,8 @@ internal class GildedRoseTest {
     internal fun setUp() {
         this.regularItem = getRegularItem()
         this.agedBrieItem = Item(name = "Aged Brie", sellIn = 5, quality = 12)
-        this .sulfurasItem = Item(name="Sulfuras, Hand of Ragnaros", sellIn = 23, quality = 25)
-        this.backStagePassItem = Item(name="Backstage passes to a TAFKAL80ETC concert", 30,35)
+        this.sulfurasItem = Item(name = "Sulfuras, Hand of Ragnaros", sellIn = 23, quality = 25)
+        this.backStagePassItem = Item(name = "Backstage passes to a TAFKAL80ETC concert", 30, 35)
     }
 
     @Test
@@ -75,6 +75,12 @@ internal class GildedRoseTest {
     }
 
     @Test
+    internal fun agedBrieIncreasesInQualityWhenExpired() {
+        agedBrieItem.sellIn = 0
+        assertQualityChangesBy(agedBrieItem, 2)
+    }
+
+    @Test
     internal fun agedBrieQualityMax() {
         agedBrieItem.quality = 50
         assertQualityChangesBy(agedBrieItem, 0)
@@ -87,7 +93,7 @@ internal class GildedRoseTest {
 
     @Test
     internal fun sulfurasSellInNeverChanges() {
-        assertSellInChangesBy(sulfurasItem,0)
+        assertSellInChangesBy(sulfurasItem, 0)
     }
 
     @Test
@@ -97,21 +103,21 @@ internal class GildedRoseTest {
 
     @Test
     internal fun backstagePassQualityIncreasesDoubleWhenUpComing() {
-        backStagePassItem.sellIn=10
-        assertQualityChangesBy(backStagePassItem,2)
+        backStagePassItem.sellIn = 10
+        assertQualityChangesBy(backStagePassItem, 2)
     }
 
     @Test
     internal fun backstagePassQualityIncreasesDoubleWhenConcertWeek() {
         backStagePassItem.sellIn = 5
-        assertQualityChangesBy(backStagePassItem,3)
+        assertQualityChangesBy(backStagePassItem, 3)
     }
 
     @Test
     internal fun backstagePassHasNoQualityAfterEvent() {
         backStagePassItem.sellIn = 0
         backStagePassItem.quality = 42
-        assertQualityChangesBy(backStagePassItem,-42)
+        assertQualityChangesBy(backStagePassItem, -42)
     }
 
     //regular item with random values that don't mean anything
