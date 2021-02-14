@@ -13,8 +13,8 @@ internal class GildedRoseTest {
         Pretty simple, right? Well this is where it gets interesting:
 
         - Once the sell by date has passed, Quality degrades twice as fast
-        - The Quality of an item is never negative
-        - "Aged Brie" actually increases in Quality the older it gets
+        x- The Quality of an item is never negative
+        x- "Aged Brie" actually increases in Quality the older it gets
         - The Quality of an item is never more than 50
         - "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
         - "Backstage passes", like aged brie, increases in Quality as its SellIn value approaches;
@@ -26,10 +26,12 @@ internal class GildedRoseTest {
         - "Conjured" items degrade in Quality twice as fast as normal items*/
 
     private lateinit var regularItem: Item
+    private lateinit var agedBrieItem: Item
 
     @BeforeEach
     internal fun setUp() {
         this.regularItem = getRegularItem()
+        this.agedBrieItem = Item(name = "Aged Brie", sellIn = 5, quality = 12)
     }
 
     @Test
@@ -48,12 +50,24 @@ internal class GildedRoseTest {
         assertQualityChangesBy(regularItem, 0)
     }
 
+
     @Test
     internal fun qualityWillNotDecreaseBelowZero() {
         //interesting.  If a negative number is in the system, it will simply not decrement.
         //Since the quality is ONLY controlled by this system, we should never be in this state
         regularItem.quality = -42
         assertQualityChangesBy(regularItem, 0)
+    }
+
+    @Test
+    internal fun agedBrieIncreasesInQuality() {
+        assertQualityChangesBy(agedBrieItem, +1)
+    }
+
+    @Test
+    internal fun agedBrieQualityMax() {
+        agedBrieItem.quality = 50
+        assertQualityChangesBy(agedBrieItem, 0)
     }
 
     //regular item with random values that don't mean anything
