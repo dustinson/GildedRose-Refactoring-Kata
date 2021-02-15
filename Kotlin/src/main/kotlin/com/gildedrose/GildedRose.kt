@@ -16,37 +16,33 @@ class GildedRose(var items: Array<Item>) {
             if (item.name == sulfuras)
                 return
             else if (item.name == agedBrie) {
-                incrementQuality(item, maxQuality)
+                updateQuality(item)
                 decrementSellIn(item)
-                if (isOldProperty(item)) incrementQuality(item, maxQuality)
-            }
-            else if (item.name == backstagePasses) {
-                updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
+                if (isOldProperty(item)) {
+                    updateQuality(item)
+                }
+            } else if (item.name == backstagePasses) {
+                updateQuality(item)
+                if (item.sellIn < upcomingDays) {
+                    updateQuality(item)
+                }
+                if (item.sellIn < thisWeek) {
+                    updateQuality(item)
+                }
                 decrementSellIn(item)
                 if (isOldProperty(item)) clearQuality(item)
-            }
-            else {
+            } else {
                 decrementQuality(item, minimumQuality)
                 decrementSellIn(item)
 
                 if (isOldProperty(item)) decrementQuality(item, minimumQuality)
             }
+        }
+    }
 
-//            decrementSellIn(item)
-
-//            if (isOldProperty(item)) {
-//                when (item.name) {
-//                    agedBrie -> {
-//                        incrementQuality(item, maxQuality)
-//                    }
-//                    backstagePasses -> {
-//                        clearQuality(item)
-//                    }
-//                    else -> {
-//                        decrementQuality(item, minimumQuality)
-//                    }
-//                }
-//            }
+    private fun updateQuality(item: Item) {
+        if (item.quality < maxQuality) {
+            item.quality = item.quality + 1
         }
     }
 
@@ -63,27 +59,6 @@ class GildedRose(var items: Array<Item>) {
     private fun decrementQuality(item: Item, minimumQuality: Int) {
         if (item.quality > minimumQuality) {
             item.quality = item.quality - 1
-        }
-    }
-
-    private fun updateBackstagePassQuality(
-        item: Item,
-        upcomingDays: Int,
-        maxQuality: Int,
-        thisWeek: Int
-    ) {
-        if (item.sellIn < upcomingDays) {
-            incrementQuality(item, maxQuality)
-        }
-        if (item.sellIn < thisWeek) {
-            incrementQuality(item, maxQuality)
-        }
-        incrementQuality(item, maxQuality)
-    }
-
-    private fun incrementQuality(item: Item, maxQuality: Int) {
-        if (item.quality < maxQuality) {
-            item.quality = item.quality + 1
         }
     }
 
