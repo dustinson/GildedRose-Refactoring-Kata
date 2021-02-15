@@ -31,13 +31,12 @@ class GildedRose(var items: Array<Item>) {
             if (item.sellIn < minimumSellInDays) {
                 if (item.name == agedBrie) {
                     incrementQuality(item, maxQuality)
+                } else if (item.name == backstagePasses) {
+                    item.quality = item.quality - item.quality
                 } else {
-                    if (item.name == backstagePasses) {
-                        item.quality = item.quality - item.quality
-                    } else {
-                        decrementQuality(item, minimumQuality)
-                    }
+                    decrementQuality(item, minimumQuality)
                 }
+
             }
         }
     }
