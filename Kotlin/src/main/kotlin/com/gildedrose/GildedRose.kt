@@ -16,23 +16,25 @@ class GildedRose(var items: Array<Item>) {
         var sulfurasManager = SulfurasManager(standardProductManager)
 
         items.forEach { item ->
+            var manager: IProductManager
             when (item.name) {
-                sulfuras -> sulfurasManager.Update(item)
+                sulfuras -> manager = sulfurasManager
                 agedBrie -> {
-                    agedBrieManager.Update(item)
+                    manager = agedBrieManager
                 }
                 backstagePasses -> {
-                    backstagePassManager.Update(item)
+                    manager = backstagePassManager
                 }
                 else -> {
-                    standardProductManager.Update(item)
+                    manager = standardProductManager
                 }
             }
+            manager.Update(item)
         }
     }
 }
 
-class SulfurasManager(val manager: StandardProductManager): IProductManager {
+class SulfurasManager(val manager: StandardProductManager) : IProductManager {
     override fun Update(item: Item) {
         return
     }
@@ -60,7 +62,7 @@ class BackstagePassManager(val manager: StandardProductManager) : IProductManage
     }
 }
 
-class AgedBrieManager(val manager: StandardProductManager): IProductManager {
+class AgedBrieManager(val manager: StandardProductManager) : IProductManager {
 
     override fun Update(item: Item) {
         manager.updateQuality(item)
@@ -70,7 +72,7 @@ class AgedBrieManager(val manager: StandardProductManager): IProductManager {
     }
 }
 
-class StandardProductManager: IProductManager{
+class StandardProductManager : IProductManager {
     fun decrementSellIn(item: Item) {
         item.sellIn = item.sellIn - 1
     }
