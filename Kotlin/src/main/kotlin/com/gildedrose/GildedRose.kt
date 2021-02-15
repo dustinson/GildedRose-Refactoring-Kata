@@ -32,17 +32,15 @@ class GildedRose(var items: Array<Item>) {
                 }
             } else {
                 if (item.name == backstagePasses) {
-                    if (item.name == backstagePasses) {
-                        if (item.sellIn < upcomingDays) {
-                            if (item.quality < maxQuality) {
-                                item.quality = item.quality + 1
-                            }
+                    if (item.sellIn < upcomingDays) {
+                        if (item.quality < maxQuality) {
+                            item.quality = item.quality + 1
                         }
+                    }
 
-                        if (item.sellIn < thisWeek) {
-                            if (item.quality < maxQuality) {
-                                item.quality = item.quality + 1
-                            }
+                    if (item.sellIn < thisWeek) {
+                        if (item.quality < maxQuality) {
+                            item.quality = item.quality + 1
                         }
                     }
                     if (item.quality < maxQuality) {
