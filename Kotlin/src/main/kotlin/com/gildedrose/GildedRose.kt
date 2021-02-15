@@ -15,22 +15,35 @@ class GildedRose(var items: Array<Item>) {
         items.forEach { item ->
             if (item.name == sulfuras)
                 return
-            when (item.name) {
-                agedBrie -> {
-                    incrementQuality(item, maxQuality)
-                }
-                backstagePasses -> {
-                    updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
-                }
-                else -> {
-                    decrementQuality(item, minimumQuality)
-                }
-            }
+            
+            applyBasicQualityRules(item, agedBrie, maxQuality, backstagePasses, upcomingDays, thisWeek, minimumQuality)
 
             decrementSellIn(item)
 
             if (item.sellIn < minimumSellInDays) {
                 applyOldProductQualityRules(item, agedBrie, maxQuality, backstagePasses, minimumQuality)
+            }
+        }
+    }
+
+    private fun applyBasicQualityRules(
+        item: Item,
+        agedBrie: String,
+        maxQuality: Int,
+        backstagePasses: String,
+        upcomingDays: Int,
+        thisWeek: Int,
+        minimumQuality: Int
+    ) {
+        when (item.name) {
+            agedBrie -> {
+                incrementQuality(item, maxQuality)
+            }
+            backstagePasses -> {
+                updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
+            }
+            else -> {
+                decrementQuality(item, minimumQuality)
             }
         }
     }
