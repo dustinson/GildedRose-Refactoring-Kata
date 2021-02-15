@@ -34,7 +34,7 @@ class GildedRose(var items: Array<Item>) {
                         incrementQuality(item, maxQuality)
                     }
                     backstagePasses -> {
-                        item.quality = item.quality - item.quality
+                        clearQuality(item)
                     }
                     else -> {
                         decrementQuality(item, minimumQuality)
@@ -43,6 +43,10 @@ class GildedRose(var items: Array<Item>) {
 
             }
         }
+    }
+
+    private fun clearQuality(item: Item) {
+        item.quality = item.quality - item.quality
     }
 
     private fun decrementSellIn(item: Item) {
