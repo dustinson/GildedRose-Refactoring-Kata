@@ -15,24 +15,21 @@ class GildedRose(var items: Array<Item>) {
         items.forEach { item ->
             if (item.name == sulfuras)
                 return
+            else if (item.name == agedBrie) {
+                incrementQuality(item, maxQuality)
+                decrementSellIn(item)
+                if (isOldProperty(item)) incrementQuality(item, maxQuality)
+            }
+            else if (item.name == backstagePasses) {
+                updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
+                decrementSellIn(item)
+                if (isOldProperty(item)) clearQuality(item)
+            }
+            else {
+                decrementQuality(item, minimumQuality)
+                decrementSellIn(item)
 
-            when (item.name) {
-                agedBrie -> {
-                    incrementQuality(item, maxQuality)
-                    decrementSellIn(item)
-                    if (isOldProperty(item)) incrementQuality(item, maxQuality)
-                }
-                backstagePasses -> {
-                    updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
-                    decrementSellIn(item)
-                    if (isOldProperty(item)) clearQuality(item)
-                }
-                else -> {
-                    decrementQuality(item, minimumQuality)
-                    decrementSellIn(item)
-
-                    if (isOldProperty(item)) decrementQuality(item, minimumQuality)
-                }
+                if (isOldProperty(item)) decrementQuality(item, minimumQuality)
             }
 
 //            decrementSellIn(item)
