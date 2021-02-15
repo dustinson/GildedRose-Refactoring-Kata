@@ -22,17 +22,10 @@ class GildedRose(var items: Array<Item>) {
             } else if (item.name == backstagePasses) {
                 backstagePassManager.Update(item)
             } else {
-                standardProductManager.decrementQuality(item)
-                standardProductManager.decrementSellIn(item)
-
-                if (standardProductManager.isOldProperty(item)) {
-                    standardProductManager.decrementQuality(item)
-                }
+                standardProductManager.Update(item)
             }
         }
     }
-
-
 }
 
 class BackstagePassManager(val manager: StandardProductManager) {
@@ -85,5 +78,14 @@ class StandardProductManager {
     }
 
     fun isOldProperty(item: Item) = item.sellIn < minimumSellInDays
+
+    fun Update(item: Item) {
+        decrementQuality(item)
+        decrementSellIn(item)
+
+        if (isOldProperty(item)) {
+            decrementQuality(item)
+        }
+    }
 }
 
