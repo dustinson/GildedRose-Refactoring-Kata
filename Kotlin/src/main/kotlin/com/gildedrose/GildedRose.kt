@@ -16,40 +16,32 @@ class GildedRose(var items: Array<Item>) {
             if (item.name == sulfuras)
                 return
 
-            applyBasicQualityRules(item)
+            when (item.name) {
+                agedBrie -> {
+                    incrementQuality(item, maxQuality)
+                }
+                backstagePasses -> {
+                    updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
+                }
+                else -> {
+                    decrementQuality(item, minimumQuality)
+                }
+            }
 
             decrementSellIn(item)
 
             if (isOldProperty(item)) {
-                applyOldQualityRules(item)
-            }
-        }
-    }
-
-    private fun applyOldQualityRules(item: Item) {
-        when (item.name) {
-            agedBrie -> {
-                incrementQuality(item, maxQuality)
-            }
-            backstagePasses -> {
-                clearQuality(item)
-            }
-            else -> {
-                decrementQuality(item, minimumQuality)
-            }
-        }
-    }
-
-    private fun applyBasicQualityRules(item: Item) {
-        when (item.name) {
-            agedBrie -> {
-                incrementQuality(item, maxQuality)
-            }
-            backstagePasses -> {
-                updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
-            }
-            else -> {
-                decrementQuality(item, minimumQuality)
+                when (item.name) {
+                    agedBrie -> {
+                        incrementQuality(item, maxQuality)
+                    }
+                    backstagePasses -> {
+                        clearQuality(item)
+                    }
+                    else -> {
+                        decrementQuality(item, minimumQuality)
+                    }
+                }
             }
         }
     }
