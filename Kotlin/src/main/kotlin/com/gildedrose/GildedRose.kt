@@ -16,37 +16,24 @@ class GildedRose(var items: Array<Item>) {
             if (item.name == agedBrie) {
                 if (item.name == backstagePasses) {
                     if (item.sellIn < upcomingDays) {
-                        if (item.quality < maxQuality) {
-                            item.quality = item.quality + 1
-                        }
+                        incrementQuality(item, maxQuality)
                     }
 
                     if (item.sellIn < thisWeek) {
-                        if (item.quality < maxQuality) {
-                            item.quality = item.quality + 1
-                        }
+                        incrementQuality(item, maxQuality)
                     }
                 }
-                if (item.quality < maxQuality) {
-                    item.quality = item.quality + 1
-                }
+                incrementQuality(item, maxQuality)
             } else {
                 if (item.name == backstagePasses) {
                     if (item.sellIn < upcomingDays) {
-                        if (item.quality < maxQuality) {
-                            item.quality = item.quality + 1
-                        }
+                        incrementQuality(item, maxQuality)
                     }
 
                     if (item.sellIn < thisWeek) {
-                        if (item.quality < maxQuality) {
-                            item.quality = item.quality + 1
-                        }
+                        incrementQuality(item, maxQuality)
                     }
-                    if (item.quality < maxQuality) {
-                        item.quality = item.quality + 1
-
-                    }
+                    incrementQuality(item, maxQuality)
                 } else {
                     if (item.quality > minimumQuality) {
                         if (item.name == sulfuras) {
@@ -64,9 +51,7 @@ class GildedRose(var items: Array<Item>) {
 
             if (item.sellIn < minimumSellInDays) {
                 if (item.name == agedBrie) {
-                    if (item.quality < maxQuality) {
-                        item.quality = item.quality + 1
-                    }
+                    incrementQuality(item, maxQuality)
                 } else {
                     if (item.name == backstagePasses) {
                         item.quality = item.quality - item.quality
@@ -80,6 +65,12 @@ class GildedRose(var items: Array<Item>) {
                     }
                 }
             }
+        }
+    }
+
+    private fun incrementQuality(item: Item, maxQuality: Int) {
+        if (item.quality < maxQuality) {
+            item.quality = item.quality + 1
         }
     }
 
