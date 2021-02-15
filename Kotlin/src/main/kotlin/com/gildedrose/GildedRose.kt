@@ -21,9 +21,7 @@ class GildedRose(var items: Array<Item>) {
             } else if (item.name == backstagePasses) {
                 updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
             } else {
-                if (item.quality > minimumQuality) {
-                    item.quality = item.quality - 1
-                }
+                decrementQuality(item, minimumQuality)
             }
             
 
@@ -36,12 +34,16 @@ class GildedRose(var items: Array<Item>) {
                     if (item.name == backstagePasses) {
                         item.quality = item.quality - item.quality
                     } else {
-                        if (item.quality > minimumQuality) {
-                            item.quality = item.quality - 1
-                        }
+                        decrementQuality(item, minimumQuality)
                     }
                 }
             }
+        }
+    }
+
+    private fun decrementQuality(item: Item, minimumQuality: Int) {
+        if (item.quality > minimumQuality) {
+            item.quality = item.quality - 1
         }
     }
 
