@@ -11,16 +11,15 @@ class GildedRose(var items: Array<Item>) {
     private val upcomingDays = 11
     private val thisWeek = 6
     fun updateQuality() {
+        var standardProductManager = StandardProductManager()
 
         items.forEach { item ->
             if (item.name == sulfuras)
                 return
             else if (item.name == agedBrie) {
                 updateQuality(item)
-                decrementSellIn(item)
-                if (isOldProperty(item)) {
-                    updateQuality(item)
-                }
+                standardProductManager.decrementSellIn(item)
+                if (isOldProperty(item)) updateQuality(item)
             } else if (item.name == backstagePasses) {
                 updateQuality(item)
                 if (item.sellIn < upcomingDays) {
@@ -29,14 +28,22 @@ class GildedRose(var items: Array<Item>) {
                 if (item.sellIn < thisWeek) {
                     updateQuality(item)
                 }
-                decrementSellIn(item)
+                standardProductManager.decrementSellIn(item)
                 if (isOldProperty(item)) clearQuality(item)
             } else {
-                decrementQuality(item, minimumQuality)
-                decrementSellIn(item)
+                decrementQuality(item)
+                standardProductManager.decrementSellIn(item)
 
-                if (isOldProperty(item)) decrementQuality(item, minimumQuality)
+                if (isOldProperty(item)) {
+                    decrementQuality(item)
+                }
             }
+        }
+    }
+
+    private fun decrementQuality(item: Item) {
+        if (item.quality > minimumQuality) {
+            item.quality = item.quality - 1
         }
     }
 
@@ -52,15 +59,12 @@ class GildedRose(var items: Array<Item>) {
         item.quality = 0
     }
 
-    private fun decrementSellIn(item: Item) {
+
+}
+
+class StandardProductManager {
+    fun decrementSellIn(item: Item) {
         item.sellIn = item.sellIn - 1
     }
-
-    private fun decrementQuality(item: Item, minimumQuality: Int) {
-        if (item.quality > minimumQuality) {
-            item.quality = item.quality - 1
-        }
-    }
-
 }
 
