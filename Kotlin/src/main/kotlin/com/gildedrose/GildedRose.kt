@@ -13,17 +13,19 @@ class GildedRose(var items: Array<Item>) {
         val thisWeek = 6
 
         items.forEach { item ->
-            if (applyNormalQualityRules(
-                    item,
-                    sulfuras,
-                    agedBrie,
-                    maxQuality,
-                    backstagePasses,
-                    upcomingDays,
-                    thisWeek,
-                    minimumQuality
-                )
-            ) return
+            if (item.name == sulfuras)
+                return
+            when (item.name) {
+                agedBrie -> {
+                    incrementQuality(item, maxQuality)
+                }
+                backstagePasses -> {
+                    updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
+                }
+                else -> {
+                    decrementQuality(item, minimumQuality)
+                }
+            }
 
             decrementSellIn(item)
 
@@ -31,31 +33,6 @@ class GildedRose(var items: Array<Item>) {
                 applyOldProductQualityRules(item, agedBrie, maxQuality, backstagePasses, minimumQuality)
             }
         }
-    }
-
-    private fun applyNormalQualityRules(
-        item: Item,
-        sulfuras: String,
-        agedBrie: String,
-        maxQuality: Int,
-        backstagePasses: String,
-        upcomingDays: Int,
-        thisWeek: Int,
-        minimumQuality: Int
-    ): Boolean {
-        when (item.name) {
-            sulfuras -> return true
-            agedBrie -> {
-                incrementQuality(item, maxQuality)
-            }
-            backstagePasses -> {
-                updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
-            }
-            else -> {
-                decrementQuality(item, minimumQuality)
-            }
-        }
-        return false
     }
 
     private fun applyOldProductQualityRules(
