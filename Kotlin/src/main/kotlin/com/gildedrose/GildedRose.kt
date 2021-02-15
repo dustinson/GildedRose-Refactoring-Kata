@@ -46,7 +46,7 @@ class GildedRose(var items: Array<Item>) {
     }
 
     private fun clearQuality(item: Item) {
-        item.quality = item.quality - item.quality
+        item.quality = 0
     }
 
     private fun decrementSellIn(item: Item) {
