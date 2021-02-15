@@ -8,11 +8,11 @@ class GildedRose(var items: Array<Item>) {
     private val agedBrie = "Aged Brie"
     private val backstagePasses = "Backstage passes to a TAFKAL80ETC concert"
     private val sulfuras = "Sulfuras, Hand of Ragnaros"
-    private val upcomingDays = 11
-    private val thisWeek = 6
+
     fun updateQuality() {
         var standardProductManager = StandardProductManager()
         var agedBrieManager = AgedBrieManager(standardProductManager)
+        var backstagePassManager = BackstagePassManager(standardProductManager)
 
         items.forEach { item ->
             if (item.name == sulfuras)
@@ -20,15 +20,7 @@ class GildedRose(var items: Array<Item>) {
             else if (item.name == agedBrie) {
                 agedBrieManager.Update(item)
             } else if (item.name == backstagePasses) {
-                standardProductManager.updateQuality(item)
-                if (item.sellIn < upcomingDays) {
-                    standardProductManager.updateQuality(item)
-                }
-                if (item.sellIn < thisWeek) {
-                    standardProductManager.updateQuality(item)
-                }
-                standardProductManager.decrementSellIn(item)
-                if (standardProductManager.isOldProperty(item)) standardProductManager.clearQuality(item)
+                backstagePassManager.Update(item)
             } else {
                 standardProductManager.decrementQuality(item)
                 standardProductManager.decrementSellIn(item)
@@ -41,6 +33,23 @@ class GildedRose(var items: Array<Item>) {
     }
 
 
+}
+
+class BackstagePassManager(val manager: StandardProductManager) {
+    private val upcomingDays = 11
+    private val thisWeek = 6
+
+    fun Update(item: Item) {
+        manager.updateQuality(item)
+        if (item.sellIn < upcomingDays) {
+            manager.updateQuality(item)
+        }
+        if (item.sellIn < thisWeek) {
+            manager.updateQuality(item)
+        }
+        manager.decrementSellIn(item)
+        if (manager.isOldProperty(item)) manager.clearQuality(item)
+    }
 }
 
 class AgedBrieManager(val manager: StandardProductManager) {
