@@ -14,32 +14,40 @@ class GildedRose(var items: Array<Item>) {
         var agedBrieManager = AgedBrieManager(standardProductManager)
         var backstagePassManager = BackstagePassManager(standardProductManager)
         var sulfurasManager = SulfurasManager(standardProductManager)
+
         items.forEach { item ->
-            if (item.name == sulfuras)
-                sulfurasManager.Update(item)
-            else if (item.name == agedBrie) {
-                agedBrieManager.Update(item)
-            } else if (item.name == backstagePasses) {
-                backstagePassManager.Update(item)
-            } else {
-                standardProductManager.Update(item)
+            when (item.name) {
+                sulfuras -> sulfurasManager.Update(item)
+                agedBrie -> {
+                    agedBrieManager.Update(item)
+                }
+                backstagePasses -> {
+                    backstagePassManager.Update(item)
+                }
+                else -> {
+                    standardProductManager.Update(item)
+                }
             }
         }
     }
 }
 
-class SulfurasManager(val manager: StandardProductManager) {
-    fun Update(item: Item) {
+class SulfurasManager(val manager: StandardProductManager): IProductManager {
+    override fun Update(item: Item) {
         return
     }
 
 }
 
-class BackstagePassManager(val manager: StandardProductManager) {
+interface IProductManager {
+    fun Update(item: Item)
+}
+
+class BackstagePassManager(val manager: StandardProductManager) : IProductManager {
     private val upcomingDays = 11
     private val thisWeek = 6
 
-    fun Update(item: Item) {
+    override fun Update(item: Item) {
         manager.updateQuality(item)
         if (item.sellIn < upcomingDays) {
             manager.updateQuality(item)
@@ -52,9 +60,9 @@ class BackstagePassManager(val manager: StandardProductManager) {
     }
 }
 
-class AgedBrieManager(val manager: StandardProductManager) {
+class AgedBrieManager(val manager: StandardProductManager): IProductManager {
 
-    fun Update(item: Item) {
+    override fun Update(item: Item) {
         manager.updateQuality(item)
         manager.decrementSellIn(item)
         if (manager.isOldProperty(item))
@@ -62,7 +70,7 @@ class AgedBrieManager(val manager: StandardProductManager) {
     }
 }
 
-class StandardProductManager {
+class StandardProductManager: IProductManager{
     fun decrementSellIn(item: Item) {
         item.sellIn = item.sellIn - 1
     }
@@ -86,7 +94,7 @@ class StandardProductManager {
 
     fun isOldProperty(item: Item) = item.sellIn < minimumSellInDays
 
-    fun Update(item: Item) {
+    override fun Update(item: Item) {
         decrementQuality(item)
         decrementSellIn(item)
 
