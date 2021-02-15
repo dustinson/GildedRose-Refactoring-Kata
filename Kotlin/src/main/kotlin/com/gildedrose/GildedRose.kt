@@ -2,29 +2,31 @@ package com.gildedrose
 
 class GildedRose(var items: Array<Item>) {
 
+    private val agedBrie = "Aged Brie"
+    private val backstagePasses = "Backstage passes to a TAFKAL80ETC concert"
+    private val sulfuras = "Sulfuras, Hand of Ragnaros"
+    private val maxQuality = 50
+    private val minimumSellInDays = 0
+    private val minimumQuality = 0
+    private val upcomingDays = 11
+    private val thisWeek = 6
     fun updateQuality() {
-        val agedBrie = "Aged Brie"
-        val backstagePasses = "Backstage passes to a TAFKAL80ETC concert"
-        val sulfuras = "Sulfuras, Hand of Ragnaros"
-        val maxQuality = 50
-        val minimumSellInDays = 0
-        val minimumQuality = 0
-        val upcomingDays = 11
-        val thisWeek = 6
 
         items.forEach { item ->
             if (item.name == sulfuras)
                 return
-            
+
             applyBasicQualityRules(item, agedBrie, maxQuality, backstagePasses, upcomingDays, thisWeek, minimumQuality)
 
             decrementSellIn(item)
 
-            if (item.sellIn < minimumSellInDays) {
+            if (isOldProperty(item)) {
                 applyOldProductQualityRules(item, agedBrie, maxQuality, backstagePasses, minimumQuality)
             }
         }
     }
+
+    private fun isOldProperty(item: Item) = item.sellIn < minimumSellInDays
 
     private fun applyBasicQualityRules(
         item: Item,
