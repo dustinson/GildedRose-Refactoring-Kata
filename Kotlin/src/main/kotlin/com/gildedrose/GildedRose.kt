@@ -16,14 +16,18 @@ class GildedRose(var items: Array<Item>) {
             if (item.name == sulfuras)
                 return
 
-            if (item.name == agedBrie) {
-                incrementQuality(item, maxQuality)
-            } else if (item.name == backstagePasses) {
-                updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
-            } else {
-                decrementQuality(item, minimumQuality)
+            when (item.name) {
+                agedBrie -> {
+                    incrementQuality(item, maxQuality)
+                }
+                backstagePasses -> {
+                    updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
+                }
+                else -> {
+                    decrementQuality(item, minimumQuality)
+                }
             }
-            
+
 
             item.sellIn = item.sellIn - 1
 
