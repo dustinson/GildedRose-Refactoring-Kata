@@ -9,27 +9,28 @@ class GildedRose(var items: Array<Item>) {
     private val backstagePasses = "Backstage passes to a TAFKAL80ETC concert"
     private val sulfuras = "Sulfuras, Hand of Ragnaros"
 
+    var standardProductManager = StandardProductManager()
+    var agedBrieManager = AgedBrieManager(standardProductManager)
+    var backstagePassManager = BackstagePassManager(standardProductManager)
+    var sulfurasManager = SulfurasManager(standardProductManager)
     fun updateQuality() {
-        var standardProductManager = StandardProductManager()
-        var agedBrieManager = AgedBrieManager(standardProductManager)
-        var backstagePassManager = BackstagePassManager(standardProductManager)
-        var sulfurasManager = SulfurasManager(standardProductManager)
 
         items.forEach { item ->
-            var manager: IProductManager
-            when (item.name) {
-                sulfuras -> manager = sulfurasManager
-                agedBrie -> {
-                    manager = agedBrieManager
-                }
-                backstagePasses -> {
-                    manager = backstagePassManager
-                }
-                else -> {
-                    manager = standardProductManager
-                }
-            }
+            var manager: IProductManager = getProductManager(item)
             manager.Update(item)
+        }
+    }
+
+    private fun getProductManager(item: Item) = when (item.name) {
+        sulfuras -> sulfurasManager
+        agedBrie -> {
+            agedBrieManager
+        }
+        backstagePasses -> {
+            backstagePassManager
+        }
+        else -> {
+            standardProductManager
         }
     }
 }
