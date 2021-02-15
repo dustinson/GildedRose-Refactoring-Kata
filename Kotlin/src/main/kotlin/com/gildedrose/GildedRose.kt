@@ -13,10 +13,8 @@ class GildedRose(var items: Array<Item>) {
         val thisWeek = 6
 
         items.forEach { item ->
-            if (item.name == sulfuras)
-                return
-
             when (item.name) {
+                sulfuras -> return
                 agedBrie -> {
                     incrementQuality(item, maxQuality)
                 }
@@ -27,7 +25,7 @@ class GildedRose(var items: Array<Item>) {
                     decrementQuality(item, minimumQuality)
                 }
             }
-
+            
 
             item.sellIn = item.sellIn - 1
 
