@@ -21,7 +21,21 @@ class GildedRose(var items: Array<Item>) {
             decrementSellIn(item)
 
             if (isOldProperty(item)) {
-                applyOldProductQualityRules(item, agedBrie, maxQuality, backstagePasses, minimumQuality)
+                applyOldQualityRules(item)
+            }
+        }
+    }
+
+    private fun applyOldQualityRules(item: Item) {
+        when (item.name) {
+            agedBrie -> {
+                incrementQuality(item, maxQuality)
+            }
+            backstagePasses -> {
+                clearQuality(item)
+            }
+            else -> {
+                decrementQuality(item, minimumQuality)
             }
         }
     }
@@ -41,26 +55,6 @@ class GildedRose(var items: Array<Item>) {
     }
 
     private fun isOldProperty(item: Item) = item.sellIn < minimumSellInDays
-
-    private fun applyOldProductQualityRules(
-        item: Item,
-        agedBrie: String,
-        maxQuality: Int,
-        backstagePasses: String,
-        minimumQuality: Int
-    ) {
-        when (item.name) {
-            agedBrie -> {
-                incrementQuality(item, maxQuality)
-            }
-            backstagePasses -> {
-                clearQuality(item)
-            }
-            else -> {
-                decrementQuality(item, minimumQuality)
-            }
-        }
-    }
 
     private fun clearQuality(item: Item) {
         item.quality = 0
