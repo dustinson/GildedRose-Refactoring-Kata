@@ -29,18 +29,27 @@ class GildedRose(var items: Array<Item>) {
             decrementSellIn(item)
 
             if (item.sellIn < minimumSellInDays) {
-                when (item.name) {
-                    agedBrie -> {
-                        incrementQuality(item, maxQuality)
-                    }
-                    backstagePasses -> {
-                        clearQuality(item)
-                    }
-                    else -> {
-                        decrementQuality(item, minimumQuality)
-                    }
-                }
+                applyOldProductQualityRules(item, agedBrie, maxQuality, backstagePasses, minimumQuality)
+            }
+        }
+    }
 
+    private fun applyOldProductQualityRules(
+        item: Item,
+        agedBrie: String,
+        maxQuality: Int,
+        backstagePasses: String,
+        minimumQuality: Int
+    ) {
+        when (item.name) {
+            agedBrie -> {
+                incrementQuality(item, maxQuality)
+            }
+            backstagePasses -> {
+                clearQuality(item)
+            }
+            else -> {
+                decrementQuality(item, minimumQuality)
             }
         }
     }
