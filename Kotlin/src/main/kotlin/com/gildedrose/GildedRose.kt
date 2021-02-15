@@ -13,10 +13,10 @@ class GildedRose(var items: Array<Item>) {
         var standardProductManager = StandardProductManager()
         var agedBrieManager = AgedBrieManager(standardProductManager)
         var backstagePassManager = BackstagePassManager(standardProductManager)
-
+        var sulfurasManager = SulfurasManager(standardProductManager)
         items.forEach { item ->
             if (item.name == sulfuras)
-                return
+                sulfurasManager.Update(item)
             else if (item.name == agedBrie) {
                 agedBrieManager.Update(item)
             } else if (item.name == backstagePasses) {
@@ -26,6 +26,13 @@ class GildedRose(var items: Array<Item>) {
             }
         }
     }
+}
+
+class SulfurasManager(val manager: StandardProductManager) {
+    fun Update(item: Item) {
+        return
+    }
+
 }
 
 class BackstagePassManager(val manager: StandardProductManager) {
