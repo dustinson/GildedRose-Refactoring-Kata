@@ -14,22 +14,12 @@ class GildedRose(var items: Array<Item>) {
 
         items.forEach { item ->
             if (item.name == agedBrie) {
-                if (item.name == backstagePasses) {
-                    if (item.sellIn < upcomingDays) {
-                        incrementQuality(item, maxQuality)
-                    }
-
-                    if (item.sellIn < thisWeek) {
-                        incrementQuality(item, maxQuality)
-                    }
-                }
                 incrementQuality(item, maxQuality)
             } else {
                 if (item.name == backstagePasses) {
                     if (item.sellIn < upcomingDays) {
                         incrementQuality(item, maxQuality)
                     }
-
                     if (item.sellIn < thisWeek) {
                         incrementQuality(item, maxQuality)
                     }
