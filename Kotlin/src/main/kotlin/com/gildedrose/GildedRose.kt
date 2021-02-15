@@ -17,13 +17,7 @@ class GildedRose(var items: Array<Item>) {
                 incrementQuality(item, maxQuality)
             } else {
                 if (item.name == backstagePasses) {
-                    if (item.sellIn < upcomingDays) {
-                        incrementQuality(item, maxQuality)
-                    }
-                    if (item.sellIn < thisWeek) {
-                        incrementQuality(item, maxQuality)
-                    }
-                    incrementQuality(item, maxQuality)
+                    updateBackstagePassQuality(item, upcomingDays, maxQuality, thisWeek)
                 } else {
                     if (item.quality > minimumQuality) {
                         if (item.name == sulfuras) {
@@ -56,6 +50,21 @@ class GildedRose(var items: Array<Item>) {
                 }
             }
         }
+    }
+
+    private fun updateBackstagePassQuality(
+        item: Item,
+        upcomingDays: Int,
+        maxQuality: Int,
+        thisWeek: Int
+    ) {
+        if (item.sellIn < upcomingDays) {
+            incrementQuality(item, maxQuality)
+        }
+        if (item.sellIn < thisWeek) {
+            incrementQuality(item, maxQuality)
+        }
+        incrementQuality(item, maxQuality)
     }
 
     private fun incrementQuality(item: Item, maxQuality: Int) {
