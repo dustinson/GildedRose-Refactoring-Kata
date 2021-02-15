@@ -12,14 +12,13 @@ class GildedRose(var items: Array<Item>) {
     private val thisWeek = 6
     fun updateQuality() {
         var standardProductManager = StandardProductManager()
+        var agedBrieManager = AgedBrieManager(standardProductManager)
 
         items.forEach { item ->
             if (item.name == sulfuras)
                 return
             else if (item.name == agedBrie) {
-                standardProductManager.updateQuality(item)
-                standardProductManager.decrementSellIn(item)
-                if (standardProductManager.isOldProperty(item)) updateQuality(item)
+                agedBrieManager.Update(item)
             } else if (item.name == backstagePasses) {
                 standardProductManager.updateQuality(item)
                 if (item.sellIn < upcomingDays) {
@@ -40,6 +39,18 @@ class GildedRose(var items: Array<Item>) {
             }
         }
     }
+
+
+}
+
+class AgedBrieManager(val manager: StandardProductManager) {
+
+    fun Update(item: Item) {
+        manager.updateQuality(item)
+        manager.decrementSellIn(item)
+        if (manager.isOldProperty(item))
+            manager.updateQuality(item)
+    }
 }
 
 class StandardProductManager {
@@ -52,12 +63,14 @@ class StandardProductManager {
             item.quality = item.quality + 1
         }
     }
+
     fun decrementQuality(item: Item) {
         if (item.quality > minimumQuality) {
             item.quality = item.quality - 1
         }
 
     }
+
     fun clearQuality(item: Item) {
         item.quality = 0
     }
