@@ -40,11 +40,6 @@ class GildedRose(var items: Array<Item>) {
             }
         }
     }
-
-    private
-    }
-
-
 }
 
 class StandardProductManager {
