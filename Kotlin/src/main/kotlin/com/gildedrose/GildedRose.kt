@@ -29,12 +29,16 @@ class GildedRose(var items: Array<Item>) {
             decrementSellIn(item)
 
             if (item.sellIn < minimumSellInDays) {
-                if (item.name == agedBrie) {
-                    incrementQuality(item, maxQuality)
-                } else if (item.name == backstagePasses) {
-                    item.quality = item.quality - item.quality
-                } else {
-                    decrementQuality(item, minimumQuality)
+                when (item.name) {
+                    agedBrie -> {
+                        incrementQuality(item, maxQuality)
+                    }
+                    backstagePasses -> {
+                        item.quality = item.quality - item.quality
+                    }
+                    else -> {
+                        decrementQuality(item, minimumQuality)
+                    }
                 }
 
             }
